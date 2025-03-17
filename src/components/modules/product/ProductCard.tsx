@@ -14,7 +14,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <div className="relative">
       <Card className="rounded-md overflow-hidden py-0">
         <div className="relative">
-          <Link href={`/medicines/${product.slug}`}>
+          <Link href={`/products/${product.slug}`}>
             <Image
               height={300}
               width={300}

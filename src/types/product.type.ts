@@ -18,4 +18,5 @@ export type TProduct = {
     isDeleted: boolean;
     createdAt: Date;
     updatedAt: Date;
+    __v?: number | string | undefined;
   }
