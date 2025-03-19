@@ -2,13 +2,14 @@ import ProductDetails from "@/components/modules/product/ProductDetails";
 import { getProductBySlug } from "@/services/ProductService";
 import { TProduct } from "@/types";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import { IoWarningOutline } from "react-icons/io5";
+import Loader from "@/components/Loaders/Loader";
 
 const ProductDetailsPage = async ({ params }: { params: { slug: string } }) => {
   const productDetails = await getProductBySlug(params?.slug);
   const product: TProduct = productDetails?.data;
-  
+
   if (!product) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-gray-700">
@@ -27,9 +28,13 @@ const ProductDetailsPage = async ({ params }: { params: { slug: string } }) => {
   }
 
   return (
-    <div>
+    <Suspense
+      fallback={
+       <Loader/>
+      }
+    >
       <ProductDetails product={product} />
-    </div>
+    </Suspense>
   );
 };
 

@@ -69,7 +69,7 @@ const Navbar = () => {
                 <Link href="/profile">
                   <FaUser />
                 </Link>
-                <Link href="/shopping-cart">
+                <Link href="/cart">
                   <MdShoppingCart />
                 </Link>
               </>
@@ -134,7 +134,7 @@ const Navbar = () => {
                       <Link href="/profile" onClick={handleClose}>
                         Profile
                       </Link>
-                      <Link href="/shopping-cart" onClick={handleClose}>
+                      <Link href="/cart" onClick={handleClose}>
                         Cart
                       </Link>
                     </>
