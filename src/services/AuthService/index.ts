@@ -22,27 +22,32 @@ export const registerUser = async (userData: FieldValues) => {
   }
 };
 
-export const loginUser = async (userData: FieldValues) => {
+
+
+export const loginUser = async (email: string, password: string) => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify({ email, password }),
     });
 
-    const result = await res.json();
-
-    if (result?.success) {
-      (await cookies()).set("token", result?.data?.token);
+    if (!res.ok) {
+      throw new Error("Invalid credentials. Please try again.");
     }
 
-    return result;
+    const data = await res.json();
+    if (data?.success) {
+      (await cookies()).set("token", data?.data?.token);
+    }
+    return data;
   } catch (error: any) {
-    return Error(error);
+    throw new Error(error.message);
   }
 };
+
 
 export const getCurrentUser = async () => {
   const token = (await cookies()).get("token")?.value;

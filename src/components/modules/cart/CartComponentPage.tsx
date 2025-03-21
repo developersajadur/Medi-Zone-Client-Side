@@ -48,7 +48,7 @@ const CartComponentPage = () => {
                 <div className="flex gap-4 items-center w-full md:w-auto">
                   <Image src={item.image} alt={item.name} width={80} height={80} className="rounded-lg" />
                   <div className="w-full">
-                    <h4 className="text-lg font-semibold">{item.name}</h4>
+                    <Link href={`/products/${item.slug}`} className="text-lg font-semibold">{item.name}</Link>
                     <p className="text-blue-600 font-semibold">Price: {item.price.toFixed(2)} BDT</p>
                   </div>
                 </div>

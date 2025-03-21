@@ -60,7 +60,7 @@ const CheckoutComponent = () => {
               <div className="space-y-3">
                 {(
                   [
-                    { name: "fullName", label: "Full Name" },
+                    { name: "fullName", label: "Your Full Name" },
                     { name: "address", label: "Address" },
                     { name: "city", label: "City" },
                     { name: "postalCode", label: "Postal Code" },
