@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
@@ -9,10 +10,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TShippingAddress } from "@/types";
+import { makeCheckout } from "@/services/OrderService";
 
 const CheckoutComponent = () => {
+  const [orderLoading, setOrderLoading] = useState(false);
+
   const dispatch = useAppDispatch();
   const { products: cartItems, shippingAddress } = useAppSelector((state) => state.cart);
+
 
   const {
     register,
@@ -30,16 +35,51 @@ const CheckoutComponent = () => {
     toast.success("Shipping address saved");
   };
 
-  const handlePlaceOrder = (data: TShippingAddress) => {
+  const handlePlaceOrder = async (orderData: TShippingAddress) => {
     if (!isValid) {
       toast.error("Please fill in the required fields.");
       return;
     }
-
-    handleSaveAddress(data);
-    toast.success("Order placed successfully!");
-    // Here you can proceed with order processing (API call)
+  
+    if (!paymentMethod) {
+      toast.error("Please select a payment method.");
+      return;
+    }
+  
+    handleSaveAddress(orderData);
+  
+    const formattedOrderData = {
+      products: cartItems.map((item) => ({
+        product: item._id,
+        quantity: item.orderQuantity,
+        prescription: item.requiresPrescription || null,
+      })),
+      paymentMethod: "shurjo-pay",
+      shippingAddress: orderData,
+    };
+  
+    setOrderLoading(true); // Start loading
+  
+    try {
+      const response = await makeCheckout(formattedOrderData);
+      if (response.success) {
+        toast.success("Order placed successfully!");
+        if (response?.data) {
+          setTimeout(() => {
+            window.location.href = response.data;
+          }, 500);
+        }
+      } else {
+        toast.error(response.message || "Order failed. Please try again.");
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Something went wrong!");
+    } finally {
+      setOrderLoading(false); // Stop loading
+    }
   };
+  
+  
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.orderQuantity, 0);
   const discount = subtotal * 0; //* Example: discount
@@ -131,8 +171,8 @@ const CheckoutComponent = () => {
           </Card>
 
           {/* Place Order Button */}
-          <Button onClick={handleSubmit(handlePlaceOrder)} className="w-full py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">
-            Place Order
+          <Button onClick={handleSubmit(handlePlaceOrder)} className="w-full py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700" disabled={orderLoading}>
+          {orderLoading ? "Processing..." : "Place Order"}
           </Button>
         </div>
       </div>
