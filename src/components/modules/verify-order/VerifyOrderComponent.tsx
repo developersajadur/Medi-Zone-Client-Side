@@ -9,8 +9,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { useAppDispatch } from "@/redux/hooks";
+import { clearCart } from "@/redux/services/cartSlice";
 
 const VerifyOrderComponent = () => {
+  const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("order_id");
 
@@ -29,7 +32,9 @@ const VerifyOrderComponent = () => {
       try {
         const response = await verifyOrder(orderId);
         if (response.success) {
+          dispatch(clearCart());
           setOrderData(response?.data[0]);
+          setLoading(false);
         } else {
           setError(response.message || "Failed to verify order");
         }

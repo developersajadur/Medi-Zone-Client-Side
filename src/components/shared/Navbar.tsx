@@ -66,7 +66,7 @@ const Navbar = () => {
           <div className="flex items-center gap-8 text-white text-2xl font-medium">
             {token && user?.user?.role !== "admin" && (
               <>
-                <Link href="/profile">
+                <Link href="/profile/personal-info">
                   <FaUser />
                 </Link>
                 <Link href="/cart">
@@ -131,7 +131,7 @@ const Navbar = () => {
                 <div className="flex flex-col gap-5 text-white text-lg font-medium">
                   {token && user?.user?.role !== "admin" && (
                     <>
-                      <Link href="/profile" onClick={handleClose}>
+                      <Link href="/profile/personal-info" onClick={handleClose}>
                         Profile
                       </Link>
                       <Link href="/cart" onClick={handleClose}>
