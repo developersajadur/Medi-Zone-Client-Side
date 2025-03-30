@@ -46,7 +46,7 @@ const VerifyOrderComponent = () => {
     };
 
     fetchOrder();
-  }, [orderId]);
+  }, [dispatch, orderId]);
 
   if (loading) return <p className="text-center text-gray-600">Verifying order...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;

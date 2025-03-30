@@ -8,7 +8,7 @@ import Sidebar from "./profile-sidebar/Sidebar";
 import MobileSidebar from "./profile-sidebar/MobileSidebar";
 import { profileSettingItems } from "./profile-sidebar/profile-sidebar-items";
 
-const ProfileComponent = ({ children }: { children: React.ReactNode }) => {
+const ProfileMainLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -60,4 +60,4 @@ const ProfileComponent = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default ProfileComponent;
+export default ProfileMainLayout;

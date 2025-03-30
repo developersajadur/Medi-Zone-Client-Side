@@ -1,9 +1,10 @@
+import PersonalInfoComponent from '@/components/modules/profile/personal-info/PersonalInfoComponent';
 import React from 'react';
 
 const PersonalInfoPage = () => {
     return (
         <div>
-        PersonalInfoPage
+        <PersonalInfoComponent/>
         </div>
     );
 };

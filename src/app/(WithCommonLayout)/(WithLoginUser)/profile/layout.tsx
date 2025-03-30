@@ -1,12 +1,11 @@
 import type React from "react"
-// import ProfilePage from "./page"
-import ProfileComponent from "@/components/modules/profile/ProfileComponent"
+import ProfileMainLayout from "@/components/modules/profile/ProfileMainLayout"
 
 export default function AccountSettingLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return  <ProfileComponent>{children}</ProfileComponent>
+  return  <ProfileMainLayout>{children}</ProfileMainLayout>
 }
 
